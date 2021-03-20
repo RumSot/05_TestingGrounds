@@ -6,3 +6,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG01 Introduction
 * TG02 Game Design Document (GDD)
 * TG03 Using Git LFS (Large File Support)
+* TG04 Marketing & Markdown
