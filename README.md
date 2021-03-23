@@ -13,3 +13,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG08 Introducing AI Behaviour Trees
 * TG09 Introducing AI Blackboard Data
 * TG10 Target Points and Patrol Routes
+* TG11 Using Any Actor for Waypoints
