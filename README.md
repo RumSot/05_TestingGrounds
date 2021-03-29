@@ -24,3 +24,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG19 Converting Blueprint to C++
 * TG20 Composition over Inheritance
 * TG21 How to Delete a C++ Class
+* TG22 Instanced Materials
