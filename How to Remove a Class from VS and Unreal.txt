@@ -1,0 +1,11 @@
+How to Remove a Class from VS and Unreal.
+
+1. Close Unreal and Visual Studio.
+2. Delete the .cpp and .h files from your disk directly (not in VS)
+3. Clear the derived files:
+    Delete the derived folders: .vs, Binaries, Build, Intermediate, Saved, DerivedDataCache, Script
+    Delete the derived files: .sln, .VC.db
+    Leave the Config, Content, and Source folders, and the .uproject file.
+4. Generate your IDE project files: right click on the .uproject file then open the .sln file.
+5. Open Visual Studio and rebuild the project (this gives us a clean build).
+6. Reopen Unreal from the launcher or the .uproject file (this recreates generated.h files).
