@@ -29,3 +29,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG24 OnTargetPerceptionUpdated Event
 * TG25 AI Hearing Perception in Unreal
 * TG26 The Animation Starter Pack
+* TG27 Changing a Character’s Animation
