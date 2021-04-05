@@ -35,3 +35,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG30 Simplifying Our Project
 * TG31 Renaming & Moving CPP
 * TG32 Solution: Renaming & Moving CPP
+* TG33 Holding a Gun with Skeletal Sockets
