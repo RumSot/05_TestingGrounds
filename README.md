@@ -42,3 +42,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG37 Offset Animations
 * TG38 Aiming Blend Spaces Offsets
 * TG39 Rotating with SetFocalPoint()
+* TG40 Character Movement vs Rotation
