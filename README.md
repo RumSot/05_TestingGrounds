@@ -48,3 +48,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG43 Behaviour Tree Services
 * TG44 Tweaking AI Behaviour
 * TG45 Debugging AI Behaviour
+* TG46 Refactoring to a Gun Actor
