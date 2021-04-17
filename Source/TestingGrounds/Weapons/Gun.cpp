@@ -26,18 +26,19 @@ AGun::AGun()
 
 	// Create a gun and attach it to the right-hand VR controller.
 	// Create a gun mesh component
-	VR_Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("VR_Gun"));
-	VR_Gun->SetOnlyOwnerSee(false);			// otherwise won't be visible in the multiplayer
-	VR_Gun->bCastDynamicShadow = false;
-	VR_Gun->CastShadow = false;
+//	VR_Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("VR_Gun"));
+//	VR_Gun->SetOnlyOwnerSee(false);			// otherwise won't be visible in the multiplayer
+//	VR_Gun->bCastDynamicShadow = false;
+//	VR_Gun->CastShadow = false;
 // TODO:	VR_Gun->SetupAttachment(R_MotionController);
-	VR_Gun->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+//	VR_Gun->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 
-	VR_MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("VR_MuzzleLocation"));
-	VR_MuzzleLocation->SetupAttachment(VR_Gun);
-	VR_MuzzleLocation->SetRelativeLocation(FVector(0.000004, 53.999992, 10.000000));
-	VR_MuzzleLocation->SetRelativeRotation(FRotator(0.0f, 90.0f, 0.0f));		// Counteract the rotation of the VR gun model.
+//	VR_MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("VR_MuzzleLocation"));
+//	VR_MuzzleLocation->SetupAttachment(VR_Gun);
+//	VR_MuzzleLocation->SetRelativeLocation(FVector(0.000004, 53.999992, 10.000000));
+//	VR_MuzzleLocation->SetRelativeRotation(FRotator(0.0f, 90.0f, 0.0f));		// Counteract the rotation of the VR gun model.
 }
+
 
 // Called when the game starts or when spawned
 void AGun::BeginPlay()
@@ -54,7 +55,7 @@ void AGun::Tick(float DeltaTime)
 }
 
 
-void AGun::OnFire(bool bUsingMotionControllers)
+void AGun::OnFire()
 {
 	// try and fire a projectile
 	if (ProjectileClass != nullptr)
@@ -62,14 +63,14 @@ void AGun::OnFire(bool bUsingMotionControllers)
 		UWorld* const World = GetWorld();
 		if (World != nullptr)
 		{
-			if (bUsingMotionControllers)
-			{
-				const FRotator SpawnRotation = VR_MuzzleLocation->GetComponentRotation();
-				const FVector SpawnLocation = VR_MuzzleLocation->GetComponentLocation();
-				World->SpawnActor<ABallProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
-			}
-			else
-			{
+//			if (bUsingMotionControllers_)
+//			{
+//				const FRotator SpawnRotation = VR_MuzzleLocation->GetComponentRotation();
+//				const FVector SpawnLocation = VR_MuzzleLocation->GetComponentLocation();
+//				World->SpawnActor<ABallProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+//			}
+//			else
+//			{
 				const FRotator SpawnRotation = FP_MuzzleLocation->GetComponentRotation();
 				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 				const FVector SpawnLocation = FP_MuzzleLocation->GetComponentLocation();
@@ -80,7 +81,7 @@ void AGun::OnFire(bool bUsingMotionControllers)
 
 				// spawn the projectile at the muzzle
 				World->SpawnActor<ABallProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
-			}
+//			}
 		}
 	}
 

@@ -20,16 +20,18 @@ class TESTINGGROUNDS_API AGun : public AActor
 	USceneComponent* FP_MuzzleLocation;
 
 	/** Gun mesh: VR view (attached to the VR controller directly, no arm, just the actual gun) */
-	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-	USkeletalMeshComponent* VR_Gun;
+//	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+//	USkeletalMeshComponent* VR_Gun;
 
 	/** Location on VR gun mesh where projectiles should spawn. */
-	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-	USceneComponent* VR_MuzzleLocation;
+//	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+//	USceneComponent* VR_MuzzleLocation;
 
 public:	
 	// Sets default values for this actor's properties
 	AGun();
+	/** Whether to use motion controller location for aiming. */
+//	uint8 bUsingMotionControllers_ : 1;
 
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
@@ -51,8 +53,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	/** Fires a projectile. */
-	void OnFire(bool bUsingMotionControllers = false);	// Only players use motion controllers
-														// So pass bUsingmotionControllers to OnFire in FirstPersonChar 
+	void OnFire();	// Only players use motion controllers
 
 public:	
 	// Called every frame

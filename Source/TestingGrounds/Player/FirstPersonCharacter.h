@@ -23,19 +23,17 @@ class AFirstPersonCharacter : public ACharacter
 	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
 	USkeletalMeshComponent* Mesh1P;
 
-
-
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
 
 	/** Motion controller (right hand) */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	UMotionControllerComponent* R_MotionController;
+//	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+//	UMotionControllerComponent* R_MotionController;
 
 	/** Motion controller (left hand) */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	UMotionControllerComponent* L_MotionController;
+//	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+//	UMotionControllerComponent* L_MotionController;
 
 public:
 	AFirstPersonCharacter();
@@ -57,13 +55,21 @@ public:
 	FVector GunOffset;
 
 	/** Whether to use motion controller location for aiming. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	uint8 bUsingMotionControllers : 1;
+//	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+//	uint8 bUsingMotionControllers : 1;
+
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<class AGun> GunBlueprint;
+
+private:
+
+	AGun* Gun;
 
 protected:
 
 	/** Resets HMD orientation and position in VR. */
-	void OnResetVR();
+//	void OnResetVR();
 
 	/** Handles moving forward/backward */
 	void MoveForward(float Val);
