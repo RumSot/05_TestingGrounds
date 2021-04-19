@@ -52,3 +52,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG47 Attaching Actors to Components
 * TG48 Configuring the Gun
 * TG49 Moving Files from LFS to Git
+* TG50 To LFS or Not to LFS?
