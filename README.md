@@ -55,3 +55,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG50 To LFS or Not to LFS?
 * TG51 Child Actor Components
 * TG52 Introduction to Inverse Kinematics
+* TG53 Inverse Kinematics with Animations
