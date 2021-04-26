@@ -61,3 +61,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG56 Adding Firing Animations
 * TG57 Animation Notify Events
 * TG58 Taking Damage in Blueprint
+* TG59 Death Animations and Refactors
