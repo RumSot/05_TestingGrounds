@@ -20,3 +20,8 @@ The joint to which the effector is applied.
 
 ## The IKBone is...
 The bone you are wanting to move to the target position.
+
+
+# TG63 Aiming Our 1st Person Camera.
+This lecture is redundant because Unreal 4.19 fixed this problem. 
+Use Pawn Control Rotation now works whether we are the currently possessed pawn or not; i.e. regardless of whether the camera is in use.
