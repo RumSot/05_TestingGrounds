@@ -67,3 +67,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG62 Separating Firing from Gun Meshes
 * TG63 Aiming Our 1st Person Camera
 * TG64 Architecture of Infinite Runners
+* TG65 Spawning Terrain in the GameMode
