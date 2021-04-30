@@ -1,6 +1,6 @@
 # AI Pseudocode Specification
 
-* if enemy is seen then chase enemy
- * if enemy in range then shoot at enemy
+* if enemy can be seen and within 300m then shoot at the enemy
+* if enemy can be seen and not within 300m then shoot at enemy whilst moving within 300m
 * if lost sight of enemy then move to enemy's last known position
-* else patrol
+* else move to next patrol point
