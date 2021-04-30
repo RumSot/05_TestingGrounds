@@ -23,5 +23,9 @@ The bone you are wanting to move to the target position.
 
 
 # TG63 Aiming Our 1st Person Camera.
-This lecture is redundant because Unreal 4.19 fixed this problem. 
+This lecture is redundant because Unreal 4.19 fixed this problem.
 Use Pawn Control Rotation now works whether we are the currently possessed pawn or not; i.e. regardless of whether the camera is in use.
+
+
+# TG70 Hit vs Overlap Events
+The projectile was being destroyed early because we used OverlapAllDynamic instead of Trigger on both the LockingTriggerVolume and DestroyTriggerVolume. OverlapAllDynamic sets Projectile to Block whereas Trigger sets it to Ignore!

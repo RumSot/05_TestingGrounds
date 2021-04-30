@@ -72,3 +72,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG67 Swapping Materials in Blueprint
 * TG68 Garbage Collecting Previous Tiles
 * TG69 Merging Our TP and FP Files
+* TG70 Hit vs Overlap Events
