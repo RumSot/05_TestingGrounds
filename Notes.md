@@ -28,4 +28,8 @@ Use Pawn Control Rotation now works whether we are the currently possessed pawn 
 
 
 # TG70 Hit vs Overlap Events
-The projectile was being destroyed early because we used OverlapAllDynamic instead of Trigger on both the LockingTriggerVolume and DestroyTriggerVolume. OverlapAllDynamic sets Projectile to Block whereas Trigger sets it to Ignore!
+The projectile was being destroyed early because we used *OverlapAllDynamic* instead of *Trigger* on both the *LockingTriggerVolume* and *DestroyTriggerVolume*. *OverlapAllDynamic* sets *Projectile* to Block whereas *Trigger* sets it to Ignore!
+
+
+# TG77 Converting a Character BP to C++
+Discovered that *GetActorLocation* does not include the capsule radius. Hence it is necessary to set *Reach Test Includes Agent Radius* and *Reach Test Includes Goal Radius* to false. Otherwise *BTDecorator_IsWithinRange* will conflict with *Move To* in *BT_GuardBehaviour*.
