@@ -43,19 +43,19 @@ public:
 
 	/** First Person AnimMontage to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	UAnimMontage* FPFireAnimation;
+	UAnimMontage* FireAnimation1P;
 
 	/** Third Person AnimMontage to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	UAnimMontage* TPFireAnimation;
+	UAnimMontage* FireAnimation3P;
 
 	/** First Person AnimInstance */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	UAnimInstance* FPAnimInstance;
+	UPROPERTY()
+	UAnimInstance* AnimInstance1P;
 
 	/** Third Person AnimInstance */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	UAnimInstance* TPAnimInstance;
+	UPROPERTY()
+	UAnimInstance* AnimInstance3P;
 
 	/** Fires a projectile. */
 	UFUNCTION(BlueprintCallable, Category = "Input")

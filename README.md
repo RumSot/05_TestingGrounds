@@ -83,3 +83,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG78 Who's Pulled the Trigger?
 * TG79 Cooldown Nodes & Gameplay Tags
 * TG80 Animation Montages and Slots
+* TG81 Reattaching the Gun

@@ -34,18 +34,25 @@ void AMannequin::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!GunBlueprint) {
+	if (GunBlueprint == nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("Gun blueprint is missing."));
 		return;
 	}
 	Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
-	//Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
-	Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
-	// TODO: create seperate Animation instances for first and second person, eg FPAnimInstance and TPAnimInstance then in fire play both montages.
-	Gun->FPAnimInstance = Mesh1P->GetAnimInstance();
-	Gun->TPAnimInstance = GetMesh()->GetAnimInstance();
 
-	if (InputComponent) {
+	// Attatch gun mesh to the correct skeleton component (first or third person). Doing it here because the skeleton is not yet created in the constructor.
+	if (IsPlayerControlled()) {
+		Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));	
+	}
+	else {
+		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+	}
+
+	// Create seperate Animation instances for first and second person, eg FPAnimInstance and TPAnimInstance then in fire play both montages.
+	Gun->AnimInstance1P = Mesh1P->GetAnimInstance();
+	Gun->AnimInstance3P = GetMesh()->GetAnimInstance();
+
+	if (InputComponent != nullptr) {
 		InputComponent->BindAction("Fire", IE_Pressed, this, &AMannequin::PullTrigger);
 	}
 }
@@ -62,6 +69,16 @@ void AMannequin::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AMannequin::UnPossessed()
+{
+	Super::UnPossessed();
+
+	// Attatch gun to the third person as the player has just died
+	if (Gun != nullptr) {
+		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+	}
 }
 
 void AMannequin::PullTrigger()
