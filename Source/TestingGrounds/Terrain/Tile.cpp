@@ -2,6 +2,7 @@
 
 
 #include "Tile.h"
+#include "GameFramework/Actor.h"
 #include "Math/UnrealMathUtility.h"
 
 // Sets default values
@@ -12,18 +13,20 @@ ATile::ATile()
 
 }
 
-void ATile::PlaceActors()
+void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn)
 {
-//	FMath::RandRange(float, float) or (int32, int32)
 	FVector Min(0, -2000, 0);
-	FVector Max(+4000, +2000, 0);
+	FVector Max(4000, 2000, 0);
 	FBox Bounds(Min, Max);
 
-	for (int i = 0; i < 10; i++) {
-		auto RandomPoint = FMath::RandPointInBox(Bounds);
-		UE_LOG(LogTemp, Warning, TEXT("RandomPoint: %s"), *RandomPoint.ToCompactString());
-	}
+	int NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
 
+	for (int i = 0; i < NumberToSpawn; i++) {
+		auto SpawnPoint = FMath::RandPointInBox(Bounds);
+		auto Spawned = GetWorld()->SpawnActor<AActor>(ToSpawn);
+		Spawned->SetActorRelativeLocation(SpawnPoint);
+		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+	}
 }
 
 // Called when the game starts or when spawned

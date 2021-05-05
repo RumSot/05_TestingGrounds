@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
+class AActor;
+
 UCLASS()
 class TESTINGGROUNDS_API ATile : public AActor
 {
@@ -15,8 +17,8 @@ public:
 	// Sets default values for this actor's properties
 	ATile();
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void PlaceActors();
+	UFUNCTION(BlueprintCallable, Category = "Props")
+	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn);
 
 protected:
 	// Called when the game starts or when spawned

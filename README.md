@@ -86,3 +86,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG81 Reattaching the Gun
 * TG82 Procedural Level Generation
 * TG83 Generating Random Numbers
+* TG84 Spawning Actors in the Tile
