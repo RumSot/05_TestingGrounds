@@ -2,6 +2,8 @@
 
 
 #include "Tile.h"
+#include "DrawDebugHelpers.h"
+#include "Math/Color.h"
 #include "GameFramework/Actor.h"
 #include "Math/UnrealMathUtility.h"
 
@@ -33,7 +35,8 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn)
 void ATile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	CastSphere(GetActorLocation(), 300);
 }
 
 // Called every frame
@@ -41,5 +44,23 @@ void ATile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+bool ATile::CastSphere(FVector Location, float Radius)
+{
+	FHitResult OUT HitResult;	// Not used
+	
+	bool HasHit = GetWorld()->SweepSingleByChannel(OUT HitResult,
+		Location, 
+		Location,
+		FQuat::Identity,	// zero rotation (i.e. will have no effect)
+		ECollisionChannel::ECC_Camera, 
+		FCollisionShape::MakeSphere(Radius)
+	);
+
+	FColor ResultColour = (HasHit) ? FColor::Red : FColor::Green;
+	DrawDebugSphere(GetWorld(), Location, Radius, 36, ResultColour , true, 100);
+
+	return HasHit;
 }
 
