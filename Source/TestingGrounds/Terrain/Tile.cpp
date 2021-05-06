@@ -15,20 +15,46 @@ ATile::ATile()
 
 }
 
-void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn)
+void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius)
+{
+	int NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
+
+	FVector OUT SpawnPoint;
+	for (int i = 0; i < NumberToSpawn; i++) {
+		auto FoundLocation = FindEmptyLocation(OUT SpawnPoint, Radius);
+		if (FoundLocation) {
+			PlaceActor(ToSpawn, SpawnPoint);
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("Couldn't find an empty location!"));
+		}
+	}
+}
+
+bool ATile::FindEmptyLocation(FVector &OutLocation, float Radius)
 {
 	FVector Min(0, -2000, 0);
 	FVector Max(4000, 2000, 0);
 	FBox Bounds(Min, Max);
 
-	int NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
+	const int MAX_ATTEMPTS = 10;
 
-	for (int i = 0; i < NumberToSpawn; i++) {
-		auto SpawnPoint = FMath::RandPointInBox(Bounds);
-		auto Spawned = GetWorld()->SpawnActor<AActor>(ToSpawn);
-		Spawned->SetActorRelativeLocation(SpawnPoint);
-		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+	for (int i = 0; i < MAX_ATTEMPTS; i++) {
+		auto CandidateLocation = FMath::RandPointInBox(Bounds);
+		if (IsLocationEmpty(CandidateLocation, Radius)) {
+			OutLocation = CandidateLocation;
+			return true;
+		}
 	}
+
+	return false;
+}
+
+void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint)
+{
+	auto Spawned = GetWorld()->SpawnActor<AActor>(ToSpawn);
+	Spawned->SetActorRelativeLocation(SpawnPoint);
+	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
 }
 
 // Called when the game starts or when spawned
@@ -36,7 +62,7 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CastSphere(GetActorLocation(), 300);
+
 }
 
 // Called every frame
@@ -46,21 +72,22 @@ void ATile::Tick(float DeltaTime)
 
 }
 
-bool ATile::CastSphere(FVector Location, float Radius)
+bool ATile::IsLocationEmpty(FVector Location, float Radius)
 {
 	FHitResult OUT HitResult;	// Not used
-	
+	auto GlobalLocation = ActorToWorld().TransformPosition(Location);
+
 	bool HasHit = GetWorld()->SweepSingleByChannel(OUT HitResult,
-		Location, 
-		Location,
+		GlobalLocation,
+		GlobalLocation,
 		FQuat::Identity,	// zero rotation (i.e. will have no effect)
 		ECollisionChannel::ECC_GameTraceChannel2,	// Spawn trace channel set up in Unreal Project Settings
 		FCollisionShape::MakeSphere(Radius)
 	);
 
 	FColor ResultColour = (HasHit) ? FColor::Red : FColor::Green;
-	DrawDebugCapsule(GetWorld(), Location, 0, Radius, FQuat::Identity, ResultColour, true, 100);
+	DrawDebugCapsule(GetWorld(), GlobalLocation, 0, Radius, FQuat::Identity, ResultColour, true, 100);
 
-	return HasHit;
+	return !HasHit;
 }
 
