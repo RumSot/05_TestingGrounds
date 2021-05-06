@@ -54,12 +54,12 @@ bool ATile::CastSphere(FVector Location, float Radius)
 		Location, 
 		Location,
 		FQuat::Identity,	// zero rotation (i.e. will have no effect)
-		ECollisionChannel::ECC_Camera, 
+		ECollisionChannel::ECC_GameTraceChannel2,	// Spawn trace channel set up in Unreal Project Settings
 		FCollisionShape::MakeSphere(Radius)
 	);
 
 	FColor ResultColour = (HasHit) ? FColor::Red : FColor::Green;
-	DrawDebugSphere(GetWorld(), Location, Radius, 36, ResultColour , true, 100);
+	DrawDebugCapsule(GetWorld(), Location, 0, Radius, FQuat::Identity, ResultColour, true, 100);
 
 	return HasHit;
 }

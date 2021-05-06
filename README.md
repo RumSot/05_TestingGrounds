@@ -88,3 +88,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG83 Generating Random Numbers
 * TG84 Spawning Actors in the Tile
 * TG85 Sphere Casting in C++
+* TG86 Configure Custom Trace Channels
