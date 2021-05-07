@@ -15,19 +15,23 @@ ATile::ATile()
 
 }
 
-void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius)
+void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
 {
 	int NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
 
-	FVector OUT SpawnPoint;
 	for (int i = 0; i < NumberToSpawn; i++) {
-		auto FoundLocation = FindEmptyLocation(OUT SpawnPoint, Radius);
+		FVector OUT SpawnPoint;
+		auto RandomScale = FMath::RandRange(MinScale, MaxScale);
+
+		auto FoundLocation = FindEmptyLocation(OUT SpawnPoint, Radius * RandomScale);
+
 		if (FoundLocation) {
-			PlaceActor(ToSpawn, SpawnPoint);
+			auto RandomRotation = FMath::RandRange(-180.f, 180.f);
+			PlaceActor(ToSpawn, SpawnPoint, RandomRotation, RandomScale);
 		}
-		else {
-			UE_LOG(LogTemp, Warning, TEXT("Couldn't find an empty location!"));
-		}
+		//else {
+		//	UE_LOG(LogTemp, Warning, TEXT("Couldn't find an empty location!"));
+		//}
 	}
 }
 
@@ -50,11 +54,14 @@ bool ATile::FindEmptyLocation(FVector &OutLocation, float Radius)
 	return false;
 }
 
-void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint)
+void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale)
 {
 	auto Spawned = GetWorld()->SpawnActor<AActor>(ToSpawn);
+
 	Spawned->SetActorRelativeLocation(SpawnPoint);
 	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+	Spawned->SetActorRotation(FRotator(0, Rotation, 0));
+	Spawned->SetActorScale3D(FVector(Scale));
 }
 
 // Called when the game starts or when spawned
@@ -85,8 +92,8 @@ bool ATile::IsLocationEmpty(FVector Location, float Radius)
 		FCollisionShape::MakeSphere(Radius)
 	);
 
-	FColor ResultColour = (HasHit) ? FColor::Red : FColor::Green;
-	DrawDebugCapsule(GetWorld(), GlobalLocation, 0, Radius, FQuat::Identity, ResultColour, true, 100);
+	//FColor ResultColour = (HasHit) ? FColor::Red : FColor::Green;
+	//DrawDebugCapsule(GetWorld(), GlobalLocation, 0, Radius, FQuat::Identity, ResultColour, true, 100);
 
 	return !HasHit;
 }
