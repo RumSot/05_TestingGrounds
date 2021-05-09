@@ -92,3 +92,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG87 Spawning into Free Space
 * TG88 Randomising Rotation & Scale
 * TG89 Flyweight Pattern for Foliage
+* TG90 Choosing Waypoint with EQS
