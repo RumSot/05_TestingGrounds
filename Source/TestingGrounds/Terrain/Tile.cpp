@@ -3,6 +3,7 @@
 
 #include "Tile.h"
 #include "DrawDebugHelpers.h"
+#include "EngineUtils.h"
 #include "Math/Color.h"
 #include "GameFramework/Actor.h"
 #include "Math/UnrealMathUtility.h"
