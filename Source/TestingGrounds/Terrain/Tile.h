@@ -7,6 +7,7 @@
 #include "Tile.generated.h"
 
 class AActor;
+class UActorPool;
 
 UCLASS()
 class TESTINGGROUNDS_API ATile : public AActor
@@ -16,6 +17,9 @@ class TESTINGGROUNDS_API ATile : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ATile();
+
+	UFUNCTION(BlueprintCallable, Category = "Pool")
+	void SetPool(UActorPool* InPool);
 
 	UFUNCTION(BlueprintCallable, Category = "Props")
 	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500, float MinScale = 1, float MaxScale = 1);
@@ -28,9 +32,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
 private:
 	bool IsLocationEmpty(FVector Location, float Radius);
 
 	bool FindEmptyLocation(FVector& OutLocation, float Radius);
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale);	// Rotation is around the z-axis only
+
+	UActorPool* Pool;
 };

@@ -2,6 +2,7 @@
 
 
 #include "Tile.h"
+#include "../ActorPool.h"
 #include "DrawDebugHelpers.h"
 #include "EngineUtils.h"
 #include "Math/Color.h"
@@ -13,6 +14,14 @@ ATile::ATile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+}
+
+void ATile::SetPool(UActorPool* InPool)
+{
+	Pool = InPool;
+
+	UE_LOG(LogTemp, Warning, TEXT("[%s] Setting Pool"), *(this->GetName()), *(InPool->GetName()));
 
 }
 
