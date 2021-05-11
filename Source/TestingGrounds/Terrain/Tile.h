@@ -36,16 +36,23 @@ public:
 
 protected:
 	/**
-	 * Minimum corner on the tile
+	 * Minimum corner on the tile, default value set in constructor.
 	 */
 	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	FVector MinExtent;
 
 	/**
-	 * Maximum corner on the tile
+	 * Maximum corner on the tile, default value set in constructor
 	 */
 	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	FVector MaxExtent;
+
+	/**
+	* Default value set in constructor.
+	*/
+	UPROPERTY(EditDefaultsOnly,  Category = "Navigation")
+	FVector NavigationBoundsOffset;
+
 
 
 private:

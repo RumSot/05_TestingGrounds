@@ -8,12 +8,16 @@
 #include "Math/Color.h"
 #include "GameFramework/Actor.h"
 #include "Math/UnrealMathUtility.h"
+#include "Engine/World.h"
+#include "NavigationSystem.h"
 
 // Sets default values
 ATile::ATile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	NavigationBoundsOffset = FVector(2000, 0, 0);
 
 	MinExtent = FVector(0, -2000, 0);
 	MaxExtent = FVector(4000, 2000, 0);
@@ -36,12 +40,10 @@ void ATile::PositionNavMeshBoundsVolume()
 		UE_LOG(LogTemp, Error, TEXT("[%s] Not enough actors in pool."), *GetName());
 		return;
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out: {%s}"), *(this->GetName()), *(NavMeshBoundsVolume->GetName()));
-
-	}
-	NavMeshBoundsVolume->SetActorLocation(GetActorLocation());
+	UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out: {%s}"), *(this->GetName()), *(NavMeshBoundsVolume->GetName()));
+	NavMeshBoundsVolume->SetActorLocation(GetActorLocation() + NavigationBoundsOffset);
+	UNavigationSystemV1* NavSystem = Cast<UNavigationSystemV1>(GetWorld()->GetNavigationSystem());
+	NavSystem->Build();
 }
 
 void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
