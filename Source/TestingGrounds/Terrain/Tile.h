@@ -34,6 +34,19 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	/**
+	 * Minimum corner on the tile
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
+	FVector MinExtent;
+
+	/**
+	 * Maximum corner on the tile
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
+	FVector MaxExtent;
+
 
 private:
 	void PositionNavMeshBoundsVolume();

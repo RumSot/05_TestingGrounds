@@ -96,3 +96,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG91 Find Actors of Type from C++
 * TG92 Plumbing an Actor Pool Setup
 * TG93 Using the Pool API
+* TG94 Using TArray for Pools

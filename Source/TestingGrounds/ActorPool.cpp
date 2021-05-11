@@ -15,27 +15,20 @@ UActorPool::UActorPool()
 
 AActor* UActorPool::Checkout()
 {
-	UE_LOG(LogTemp, Warning, TEXT("[%s] checked out."), *GetName());
+	if (Pool.Num() == 0)
+	{
+		return nullptr;
+	}
 
-	return nullptr;
+	return Pool.Pop();;
 }
 
 void UActorPool::Return(AActor* ActorToReturn)
 {
-	if (ActorToReturn == nullptr)
-	{
-		UE_LOG(LogTemp, Error, TEXT("[%s] returned null actor."), *GetName());
-		return;
-	}
-	UE_LOG(LogTemp, Warning, TEXT("[%s] returned %s."), *GetName(), *(ActorToReturn->GetName()));
+	Add(ActorToReturn);
 }
 
 void UActorPool::Add(AActor* ActorToAdd)
 {
-	if (ActorToAdd == nullptr)
-	{
-		UE_LOG(LogTemp, Error, TEXT("[%s] added null actor."), *GetName());
-		return;
-	}
-	UE_LOG(LogTemp, Warning, TEXT("[%s] added actor %s."), *GetName(), *(ActorToAdd->GetName()));
+	Pool.Push(ActorToAdd);
 }
