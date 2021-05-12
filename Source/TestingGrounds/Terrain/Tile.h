@@ -6,6 +6,39 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
+
+USTRUCT()
+struct FSpawnPosition
+{
+	GENERATED_USTRUCT_BODY()
+
+	FVector Location;
+	float Rotation;
+	float Scale;
+};
+
+USTRUCT(BlueprintType)
+struct FSpawnSeeds
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(BlueprintReadWrite, Category = "Seeds")
+	int MinToSpawn = 1;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Seeds")
+	int MaxToSpawn = 1;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Seeds")
+	float Radius = 500;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Seeds")
+	float MinScale = 1;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Seeds")
+	float MaxScale = 1;
+};
+
+
 class UActorPool;
 
 UCLASS()
@@ -20,8 +53,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Pool")
 	void SetPool(UActorPool* InPool);
 
+	//UFUNCTION(BlueprintCallable, Category = "Props")
+	//void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500, float MinScale = 1, float MaxScale = 1);
+
 	UFUNCTION(BlueprintCallable, Category = "Props")
-	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500, float MinScale = 1, float MaxScale = 1);
+	void SpawnActors(TSubclassOf<AActor> ToSpawn, struct FSpawnSeeds SpawnSeeds);
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -58,10 +95,12 @@ protected:
 private:
 	void PositionNavMeshBoundsVolume();
 
+	TArray<FSpawnPosition> GenerateSpawnPositions(struct FSpawnSeeds SpawnSeeds);
+
 	bool IsLocationEmpty(FVector Location, float Radius);
 
 	bool FindEmptyLocation(FVector& OutLocation, float Radius);
-	void PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale);	// Rotation is around the z-axis only
+	void PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition);	// Rotation is around the z-axis only
 
 	UActorPool* Pool;
 	AActor* NavMeshBoundsVolume;

@@ -98,3 +98,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG93 Using the Pool API
 * TG94 Using TArray for Pools
 * TG95 Rebuilding Navigation Meshes
+* TG96 Structs to Simplify Function Args
