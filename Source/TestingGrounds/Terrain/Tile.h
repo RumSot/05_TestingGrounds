@@ -57,9 +57,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Pool")
 	void SetPool(UActorPool* InPool);
 
-	//UFUNCTION(BlueprintCallable, Category = "Props")
-	//void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500, float MinScale = 1, float MaxScale = 1);
-
 	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	void SpawnActors(TSubclassOf<AActor> ToSpawn, struct FSpawnSeeds SpawnSeeds);
 
@@ -102,16 +99,37 @@ protected:
 private:
 	void PositionNavMeshBoundsVolume();
 
-	TArray<FSpawnPosition> GenerateSpawnPositions(FSpawnSeeds SpawnSeeds);
-
 	bool IsLocationEmpty(FVector Location, float Radius);
 
 	bool FindEmptyLocation(FVector& OutLocation, float Radius);
+
+
+	template<typename T>
+	void RandomlyPlaceActors(TSubclassOf<T> ToSpawn, struct FSpawnSeeds SpawnSeeds);
+
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition);	// Rotation is around the z-axis only
-	void PlaceAIPawn(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition);
+	void PlaceActor(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition);
 
 	UActorPool* Pool;
 	AActor* NavMeshBoundsVolume;
 
 	bool TileNotConquered = true;
 };
+
+template<typename T>
+inline void ATile::RandomlyPlaceActors(TSubclassOf<T> ToSpawn, FSpawnSeeds SpawnSeeds)
+{
+	int NumberToSpawn = FMath::RandRange(SpawnSeeds.MinToSpawn, SpawnSeeds.MaxToSpawn);
+
+	for (int i = 0; i < NumberToSpawn; i++) {
+		FSpawnPosition SpawnPosition;
+		SpawnPosition.Scale = FMath::RandRange(SpawnSeeds.MinScale, SpawnSeeds.MaxScale);
+		auto FoundLocation = FindEmptyLocation(OUT SpawnPosition.Location, SpawnSeeds.Radius * SpawnPosition.Scale);
+
+		if (FoundLocation) {
+			SpawnPosition.Rotation = FMath::RandRange(-180.f, 180.f);
+			PlaceActor(ToSpawn, SpawnPosition);
+		}
+	}
+}
+
