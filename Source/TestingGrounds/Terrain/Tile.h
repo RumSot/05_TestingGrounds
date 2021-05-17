@@ -10,18 +10,19 @@
 USTRUCT()
 struct FSpawnPosition
 {
-	GENERATED_USTRUCT_BODY()
+	GENERATED_BODY()
 
 	FVector Location;
 	float Rotation;
 	float Scale;
 };
 
-USTRUCT(BlueprintType)
+USTRUCT(BlueprintType, Category = "Seeds")
 struct FSpawnSeeds
 {
-	GENERATED_USTRUCT_BODY()
+	GENERATED_BODY()
 
+public:
 	UPROPERTY(BlueprintReadWrite, Category = "Seeds")
 	int MinToSpawn = 1;
 
@@ -56,9 +57,11 @@ public:
 	//UFUNCTION(BlueprintCallable, Category = "Props")
 	//void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500, float MinScale = 1, float MaxScale = 1);
 
-	UFUNCTION(BlueprintCallable, Category = "Props")
+	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	void SpawnActors(TSubclassOf<AActor> ToSpawn, struct FSpawnSeeds SpawnSeeds);
 
+	UFUNCTION(BlueprintCallable, Category = "Spawning")
+	void SpawnAIPawns(TSubclassOf<APawn> ToSpawn, struct FSpawnSeeds SpawnSeeds);
 
 protected:
 	// Called when the game starts or when spawned
@@ -80,6 +83,7 @@ protected:
 
 	/**
 	 * Maximum corner on the tile, default value set in constructor
+
 	 */
 	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
 	FVector MaxExtent;
@@ -95,12 +99,13 @@ protected:
 private:
 	void PositionNavMeshBoundsVolume();
 
-	TArray<FSpawnPosition> GenerateSpawnPositions(struct FSpawnSeeds SpawnSeeds);
+	TArray<FSpawnPosition> GenerateSpawnPositions(FSpawnSeeds SpawnSeeds);
 
 	bool IsLocationEmpty(FVector Location, float Radius);
 
 	bool FindEmptyLocation(FVector& OutLocation, float Radius);
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition);	// Rotation is around the z-axis only
+	void PlaceAIPawn(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition);
 
 	UActorPool* Pool;
 	AActor* NavMeshBoundsVolume;

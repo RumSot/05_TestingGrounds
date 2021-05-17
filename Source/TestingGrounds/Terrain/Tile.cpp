@@ -47,20 +47,10 @@ void ATile::PositionNavMeshBoundsVolume()
 	NavSystem->Build();
 }
 
-//void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
-//{
-//	FSpawnSeeds SpawnSeeds;
-//	SpawnSeeds.MinToSpawn = MinSpawn;
-//	SpawnSeeds.MaxToSpawn = MaxSpawn;
-//	SpawnSeeds.Radius = Radius;
-//	SpawnSeeds.MinScale = MinScale;
-//	SpawnSeeds.MaxScale = MaxScale;
-//
-//	SpawnActors(ToSpawn, SpawnSeeds);
-//}
 
-void ATile::SpawnActors(TSubclassOf<AActor> ToSpawn, struct FSpawnSeeds SpawnSeeds)
+void ATile::SpawnActors(TSubclassOf<AActor> ToSpawn, FSpawnSeeds SpawnSeeds)
 {
+	
 	auto SpawnPositions = GenerateSpawnPositions(SpawnSeeds);
 
 	for (auto SpawnPosition : SpawnPositions) 
@@ -69,8 +59,17 @@ void ATile::SpawnActors(TSubclassOf<AActor> ToSpawn, struct FSpawnSeeds SpawnSee
 	}
 }
 
+void ATile::SpawnAIPawns(TSubclassOf<APawn> ToSpawn, FSpawnSeeds SpawnSeeds)
+{
+	auto SpawnPositions = GenerateSpawnPositions(SpawnSeeds);
 
-TArray<FSpawnPosition> ATile::GenerateSpawnPositions(struct FSpawnSeeds SpawnSeeds)
+	for (auto SpawnPosition : SpawnPositions)
+	{
+		PlaceAIPawn(ToSpawn, SpawnPosition);
+	}
+}
+
+TArray<FSpawnPosition> ATile::GenerateSpawnPositions(FSpawnSeeds SpawnSeeds)
 {
 	TArray<FSpawnPosition> SpawnPositions;
 
@@ -115,6 +114,18 @@ void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition
 	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
 	Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
 	Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
+}
+
+void ATile::PlaceAIPawn(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition)
+{
+	auto Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn);
+
+	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
+	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+	Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
+
+	Spawned->SpawnDefaultController();
+	Spawned->Tags.Add(FName("Enemy"));
 }
 
 // Called when the game starts or when spawned
