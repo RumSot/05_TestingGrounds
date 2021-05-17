@@ -2,7 +2,9 @@
 
 
 #include "Tile.h"
+#include "../InfiniteTerrainGameMode.h"
 #include "../ActorPool.h"
+#include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
 #include "EngineUtils.h"
 #include "Math/Color.h"
@@ -22,6 +24,18 @@ ATile::ATile()
 
 	MinExtent = FVector(0, -2000, 0);
 	MaxExtent = FVector(4000, 2000, 0);
+}
+
+void ATile::TileConquered()
+{
+	if (TileNotConquered)
+	{
+		auto GameMode = Cast<AInfiniteTerrainGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+		if (!GameMode) return;
+
+		GameMode->UpdateScore();
+		TileNotConquered = false;
+	}
 }
 
 void ATile::SetPool(UActorPool* InPool)

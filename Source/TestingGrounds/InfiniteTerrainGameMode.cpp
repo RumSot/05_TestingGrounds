@@ -3,6 +3,7 @@
 
 #include "InfiniteTerrainGameMode.h"
 #include "NavMesh/NavMeshBoundsVolume.h"
+#include "Kismet/KismetSystemLibrary.h"		// UKismetSystemLibrary::PrintString
 #include "EngineUtils.h"
 #include "ActorPool.h"
 
@@ -27,4 +28,11 @@ void AInfiniteTerrainGameMode::PopulateBoundsVolumePool()
 void AInfiniteTerrainGameMode::AddToPool(ANavMeshBoundsVolume* VolumeToAdd)
 {
 	NavMeshBoundsVolumePool->Add(VolumeToAdd);
+}
+
+void AInfiniteTerrainGameMode::UpdateScore()
+{
+	++Score;
+	FString CurrentScore = FString::Printf(TEXT("Score: %d"), Score);
+	UKismetSystemLibrary::PrintString(GetWorld(), CurrentScore);
 }

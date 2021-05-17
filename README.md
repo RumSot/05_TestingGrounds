@@ -100,3 +100,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG95 Rebuilding Navigation Meshes
 * TG96 Structs to Simplify Function Args
 * TG97 Spawning AI from C++
+* TG98 Keeping Score

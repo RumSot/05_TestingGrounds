@@ -51,6 +51,9 @@ public:
 	// Sets default values for this actor's properties
 	ATile();
 
+	UFUNCTION(BlueprintCallable, Category = "Scoring")
+	void TileConquered();
+
 	UFUNCTION(BlueprintCallable, Category = "Pool")
 	void SetPool(UActorPool* InPool);
 
@@ -109,4 +112,6 @@ private:
 
 	UActorPool* Pool;
 	AActor* NavMeshBoundsVolume;
+
+	bool TileNotConquered = true;
 };
