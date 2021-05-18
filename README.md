@@ -104,3 +104,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG99 Understanding Function Templates
 * TG100 Template Specialization
 * TG101 Fixing Double Spawning
+* TG102 Using the HUD Class

@@ -25,6 +25,11 @@ void AInfiniteTerrainGameMode::PopulateBoundsVolumePool()
 	}
 }
 
+int AInfiniteTerrainGameMode::GetScore()
+{
+	return Score;
+}
+
 void AInfiniteTerrainGameMode::AddToPool(ANavMeshBoundsVolume* VolumeToAdd)
 {
 	NavMeshBoundsVolumePool->Add(VolumeToAdd);
@@ -33,6 +38,6 @@ void AInfiniteTerrainGameMode::AddToPool(ANavMeshBoundsVolume* VolumeToAdd)
 void AInfiniteTerrainGameMode::UpdateScore()
 {
 	++Score;
-	FString CurrentScore = FString::Printf(TEXT("Score: %d"), Score);
-	UKismetSystemLibrary::PrintString(GetWorld(), CurrentScore);
+//	FString CurrentScore = FString::Printf(TEXT("Score: %d"), Score);
+//	UKismetSystemLibrary::PrintString(GetWorld(), CurrentScore);
 }
