@@ -33,3 +33,9 @@ The projectile was being destroyed early because we used *OverlapAllDynamic* ins
 
 # TG77 Converting a Character BP to C++
 Discovered that *GetActorLocation* does not include the capsule radius. Hence it is necessary to set *Reach Test Includes Agent Radius* and *Reach Test Includes Goal Radius* to false. Otherwise *BTDecorator_IsWithinRange* will conflict with *Move To* in *BT_GuardBehaviour*.
+
+
+# TG106 Possessing and the View Target
+Remember you need to save the Controller when the pawn/actor is possessed so that you can still use after the pawn is unpossesed; we need it in spawn death camera.
+
+When you unpossess an NPC you need to check its controller is valid before you unposses because it may already have been unpossessed.

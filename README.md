@@ -108,3 +108,4 @@ Testing Grounds is a Hunger-Games inspired FPS with large outdoor terrains, adva
 * TG103 Post Processing for Tunnel Vision
 * TG104 Recruiting Play Testers
 * TG105 Smooth Blending the Camera
+* TG106 Possessing and the View Target
